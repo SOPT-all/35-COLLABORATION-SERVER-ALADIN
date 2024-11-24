@@ -30,4 +30,20 @@ public class Category {
 
     protected Category() {
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Long getParentId() {
+        return parentId;
+    }
+
+    public TextStyle getStyle() {
+        return style;
+    }
 }
