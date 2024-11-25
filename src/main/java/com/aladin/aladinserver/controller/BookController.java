@@ -6,6 +6,7 @@ import com.aladin.aladinserver.common.SuccessCode;
 import com.aladin.aladinserver.controller.response.AladinResponse;
 import com.aladin.aladinserver.controller.response.BookResponse;
 import com.aladin.aladinserver.service.BookService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,12 +24,14 @@ public class BookController {
     }
 
     @GetMapping("/books")
-    public AladinResponse<List<BookResponse>> getBooksByType(@RequestParam String type) {
+    public ResponseEntity<AladinResponse<List<BookResponse>>> getBooksByType(@RequestParam String type) {
         try {
             List<BookResponse> books = bookService.getBooksByType(type);
-            return AladinResponse.success(SuccessCode.OK, books);
+            return ResponseEntity.ok(AladinResponse.success(SuccessCode.OK, books));
         } catch (CustomException e) {
-            return AladinResponse.fail(e.getErrorCode());
+            return ResponseEntity
+                    .status(e.getErrorCode().getHttpStatus()) // 예외에 맞는 HTTP 상태 코드 설정
+                    .body(AladinResponse.fail(e.getErrorCode()));
         }
     }
 }
