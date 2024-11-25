@@ -28,6 +28,25 @@ public class Category {
     @Enumerated(EnumType.STRING)
     private TextStyle style;
 
+    @Column(name = "group_name", nullable = true) // 새로운 필드 추가
+    private String groupName;
+
     protected Category() {
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Long getParentId() {
+        return parentId;
+    }
+
+    public String getGroupName() {
+        return groupName;
+    }
+
+    public boolean isBold() {
+        return this.style == TextStyle.BOLD;
     }
 }
