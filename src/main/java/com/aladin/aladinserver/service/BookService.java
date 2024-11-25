@@ -2,16 +2,18 @@ package com.aladin.aladinserver.service;
 
 import com.aladin.aladinserver.common.CustomException;
 import com.aladin.aladinserver.common.ErrorCode;
+import com.aladin.aladinserver.controller.Sort;
 import com.aladin.aladinserver.controller.response.BookResponse;
 import com.aladin.aladinserver.entity.Book;
 import com.aladin.aladinserver.repository.BookRepository;
-import org.springframework.stereotype.Service;
+import com.aladin.aladinserver.service.response.BooksResponse;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
+import org.springframework.stereotype.Service;
 
 @Service
 public class BookService {
+
     private final BookRepository bookRepository;
 
     public BookService(BookRepository bookRepository) {
@@ -37,6 +39,14 @@ public class BookService {
         return books.stream()
                 .map(BookResponse::fromEntity)
                 .collect(Collectors.toList());
+    }
 
+    public BooksResponse getBooks(Sort sort) {
+        if (sort == Sort.MEMBERSHIP) {
+            List<com.aladin.aladinserver.service.response.BookResponse> list = bookRepository.findAllByOrderByVoteCountDesc()
+                    .stream().map(com.aladin.aladinserver.service.response.BookResponse::from).toList();
+            return new BooksResponse(list);
+        }
+        throw new CustomException(ErrorCode.BAD_REQUEST_PARAM);
     }
 }
