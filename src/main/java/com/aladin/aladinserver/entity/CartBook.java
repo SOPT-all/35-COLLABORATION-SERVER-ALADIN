@@ -23,4 +23,16 @@ public class CartBook {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Book book;
+
+    public Long getId() {
+        return id;
+    }
+
+    public Cart getCart() {
+        return cart;
+    }
+
+    public Book getBook() {
+        return book;
+    }
 }
