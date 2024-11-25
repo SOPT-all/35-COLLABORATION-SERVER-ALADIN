@@ -39,7 +39,7 @@ public class Book {
     private String imageUrl;
 
     @Column(name = "discount", nullable = false)
-    private Double discount;
+    private Integer discount;
 
     @Column(name = "is_selected_by_editor", nullable = false)
     private boolean isSelectedByEditor; //true for EDITOR, false for other types
@@ -51,6 +51,10 @@ public class Book {
         return id;
     }
 
+    public Category getCategory() {
+        return category;
+    }
+
     public String getTitle() {
         return title;
     }
@@ -59,7 +63,19 @@ public class Book {
         return description;
     }
 
+    public Integer getPrice() {
+        return price;
+    }
+
+    public Integer getVoteCount() {
+        return voteCount;
+    }
+
     public String getImageUrl() {
         return imageUrl;
+    }
+
+    public int getDiscount() {
+        return discount;
     }
 }

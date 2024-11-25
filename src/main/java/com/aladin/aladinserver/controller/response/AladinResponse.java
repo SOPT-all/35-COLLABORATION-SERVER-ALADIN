@@ -9,7 +9,7 @@ public class AladinResponse<T> {
 
     private final int code;
     private final String message;
-    @JsonInclude(value = JsonInclude.Include.NON_NULL)//null이 아닌것만(nonull)을 응답에 포함하겠다
+    @JsonInclude(value = JsonInclude.Include.NON_NULL)
     private T data;
 
     public AladinResponse(int code, String message) {
