@@ -28,11 +28,10 @@ public class Category {
     @Enumerated(EnumType.STRING)
     private TextStyle style;
 
-    protected Category() {
-    }
+    @Column(name = "group_name", nullable = true) // 새로운 필드 추가
+    private String groupName;
 
-    public Long getId() {
-        return id;
+    protected Category() {
     }
 
     public String getName() {
@@ -43,7 +42,11 @@ public class Category {
         return parentId;
     }
 
-    public TextStyle getStyle() {
-        return style;
+    public String getGroupName() {
+        return groupName;
+    }
+
+    public boolean isBold() {
+        return this.style == TextStyle.BOLD;
     }
 }

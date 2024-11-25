@@ -29,31 +29,18 @@ public class DropdownService {
         Map<String, List<String>> categories = allCategories.stream()
                 .filter(category -> category.getParentId() != null)
                 .collect(Collectors.groupingBy(
-                        category -> mapParentIdToGroupName(category.getParentId()), //parent id를 그룹 이름으로 매핑
+                        Category::getGroupName, // 여기서 groupName 기준으로 그룹핑
                         LinkedHashMap::new, // 순서 보장
-                        Collectors.mapping(Category::getName, Collectors.toList()) //이름만 뽑아서 리스트 생성
+                        Collectors.mapping(Category::getName, Collectors.toList()) //각 그룹(domesticBooks 등등)의 리스트 생성
                 ));
 
         //bold 카테고리 필터링 (순서 상관없음)
         List<String> boldCategories = allCategories.stream()
-                .filter(category -> category.getStyle() == TextStyle.BOLD) //BOLD 스타일로 된 애들
+                .filter(Category::isBold) //BOLD된 카테고리만 필터링
                 .map(Category::getName) //이름만 추출
                 .toList();
 
         return new DropdownResponse(categories, boldCategories);
     }
+    }
 
-    //parent id를 그룹 이름으로 매핑하는 메소드
-    private String mapParentIdToGroupName(Long parentId) {
-        return switch (parentId.intValue()) {
-            case 1 -> "domesticBooks";
-            case 2 -> "foreignBooks";
-            case 3 -> "eBooks";
-            case 4 -> "onlineCourses";
-            case 5 -> "music";
-            case 6 -> "blueRay";
-            case 7 -> "aladinGoods";
-            default -> "unknown";
-        };
-    }
-    }
