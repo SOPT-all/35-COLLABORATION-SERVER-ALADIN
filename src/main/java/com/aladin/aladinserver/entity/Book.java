@@ -41,6 +41,25 @@ public class Book {
     @Column(name = "discount", nullable = false)
     private Double discount;
 
+    @Column(name = "is_selected_by_editor", nullable = false)
+    private boolean isSelectedByEditor; //true for EDITOR, false for other types
+
     protected Book() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
     }
 }
