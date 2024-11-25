@@ -7,11 +7,11 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface MainviewRepository extends JpaRepository<Book, Long> {
+public interface BookRepository extends JpaRepository<Book, Long> {
     // isSelectedByEditor가 true인 책 조회 (EDITOR 타입 처리)
     List<Book> findByIsSelectedByEditorTrue();
 
-    // parentId를 통해 Category에 속한 책 조회
-    @Query("SELECT b FROM Book b WHERE b.category.parentId = :parentId")
-    List<Book> findByCategoryParentId(@Param("parentId") Long parentId);
+    // category name으로 책 조회
+    @Query("SELECT b FROM Book b JOIN FETCH b.category c WHERE LOWER(c.name) = LOWER(:categoryName)")
+    List<Book> findBooksByCategoryName(@Param("categoryName") String categoryName);
 }
